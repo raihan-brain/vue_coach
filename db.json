@@ -1,0 +1,25 @@
+{
+  "coaches" : [
+				{
+					"id": 1,
+					"name": "Ratul",
+					"organization": "bs23",
+					"courseTopics": ["c++", "Js", "ts", "VUE3", "node"],
+					"added": false
+				},
+				{
+					"id": 2,
+					"name": "Rahman",
+					"organization": "bs23",
+					"courseTopics": ["c++", "Js", "ts", "VUE3", "node"],
+					"added": false
+				},
+				{
+					"id": 3,
+					"name": "Rudra",
+					"organization": "bs23",
+					"courseTopics": ["c++", "Js", "ts", "VUE3", "node"],
+					"added": false
+				}				
+			]
+}

@@ -32,7 +32,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/components/layout/appHeader.vue", "src/store/modules/auth/UserLogin.vue", "src/components/coach/Requests.vue"  ],
   "exclude": [
     "node_modules"
   ]

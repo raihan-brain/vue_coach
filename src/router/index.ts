@@ -1,18 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Coaches from "../views/coaches.vue";
-import Home from "../views/Home.vue";
+import CoachList from "@/views/coach/CoachList.vue";
+// import UserLogin from "@/views/auth/UserLogin.vue";
+// import ContactCoach from "@/views/request/ContactCoach.vue";
+import Requests from "@/components/coach/Requests.vue";
+
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/coaches",
-    name: "Coaches",
-    component: Coaches,
-  },
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
+ 
+  { path: "/", name: "CoachList", component: CoachList},
+  // { path: "/auth", name: "Login", component: UserLogin},
+  { path: "/requests", name: "Requests", component: Requests},
   
 ];
 

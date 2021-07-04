@@ -1,25 +1,21 @@
 {
-  "coaches" : [
+  "coach-list" : [
 				{
 					"id": 1,
-					"name": "Ratul",
-					"organization": "bs23",
-					"courseTopics": ["c++", "Js", "ts", "VUE3", "node"],
-					"added": false
+					"firstName": "Ratul Rahman",
+					"lastName": "Rudra",
+					"rate": "23",
+					"description": "hello test",
+					"topics": ["js", "ts", "VUE3"] 
 				},
 				{
 					"id": 2,
-					"name": "Rahman",
-					"organization": "bs23",
-					"courseTopics": ["c++", "Js", "ts", "VUE3", "node"],
-					"added": false
-				},
-				{
-					"id": 3,
-					"name": "Rudra",
-					"organization": "bs23",
-					"courseTopics": ["c++", "Js", "ts", "VUE3", "node"],
-					"added": false
-				}				
+					"firstName": "Ratul Rahman",
+					"lastName": "Rudra",
+					"rate": "23",
+					"description": "hello test",
+					"topics": ["js", "ts", "VUE3"] 
+				}
+				
 			]
 }

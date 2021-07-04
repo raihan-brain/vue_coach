@@ -1,5 +1,5 @@
 <template>
-  <appHeader msg='this is app'/>
+  <appHeader />
   <router-view />
 </template>
 
@@ -7,7 +7,7 @@
 
 <script>
 
-import appHeader from '@/components/appHeader.vue'
+import appHeader from '@/components/layout/appHeader.vue'
 
 export default {
   components:{

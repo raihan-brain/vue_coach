@@ -20,48 +20,56 @@
 
 <script lang="ts">
 import StudentInfoCard from "@/components/StudentInfoCard.vue";
-import axios from "axios";
-import { defineComponent, ref } from "vue";
-import { useStore } from "vuex";
+import { defineComponent } from "vue";
+import StudentInfo from "../types/StudentInfo";
+import ResponseData from "../types/ResponseData";
+import CoachInfo from "../types/CoachInfo";
+import DataService from "../services/DataService";
 
 export default defineComponent({
   name: "Profile",
   components: { StudentInfoCard },
-  setup() {
-    const store = useStore();
-    const user = ref();
-    const selectedStudent = ref();
-    const nonSelectedStudent = ref();
-
-    const load = (async () => {
-      const res = await axios.get(
-        `http://localhost:3000/users?email=${store.state.userName}`
+  data() {
+    return {
+      coach: {} as CoachInfo,
+      selectedStudent: [] as StudentInfo[] | undefined,
+      nonSelectedStudent: [] as StudentInfo[] | undefined,
+    };
+  },
+  methods: {
+    retrieveCoachListByEmail() {
+      DataService.findByEmail(this.$store.state.userName).then(
+        (res: ResponseData) => {
+          console.log(res.data[0]);
+          this.selected(res.data[0]);
+          this.nonSelected(res.data[0]);
+          this.coach = res.data[0];
+        }
       );
-      user.value = res.data[0];
-      selectedStudent.value = user.value.student.filter(
-        (st: any) => st.isAccepted
+    },
+    selected(data: CoachInfo) {
+      this.selectedStudent = data.student?.filter(
+        (st: StudentInfo) => st.isAccepted
       );
-      nonSelectedStudent.value = user.value.student.filter(
-        (st: any) => !st.isAccepted
+    },
+    nonSelected(data: CoachInfo) {
+      this.nonSelectedStudent = data.student?.filter(
+        (st: StudentInfo) => !st.isAccepted
       );
-    })();
-
-    const saveChange = async (id: number) => {
-      user.value.student.forEach((st: any) => {
+    },
+    saveChange(id: number) {
+      this.coach.student?.forEach((st: StudentInfo) => {
         if (st.st_id === id) {
           st.isAccepted = true;
         }
       });
-      const res = await axios.put(
-        `http://localhost:3000/users/${user.value.id}`,
-        user.value
-      );
-    };
-
-    return { user, selectedStudent, nonSelectedStudent, saveChange };
+      DataService.update(this.coach.id, this.coach).then(() => {
+        this.retrieveCoachListByEmail();
+      });
+    },
+  },
+  mounted() {
+    this.retrieveCoachListByEmail();
   },
 });
 </script>
-
-<style>
-</style>

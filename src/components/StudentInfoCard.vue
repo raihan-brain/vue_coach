@@ -13,14 +13,18 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+import StudentInfo from "../types/StudentInfo";
+
 export default defineComponent({
   props: {
-    studentObj: {},
+    studentObj: {
+      type: Object as PropType<StudentInfo>,
+      require: true,
+    },
   },
 });
 </script>
 
-<style>
-</style>
+<style></style>

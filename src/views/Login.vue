@@ -54,7 +54,7 @@ export default defineComponent({
           var user = userCredential.user;
           console.log(user);
           store.commit("SET_USER", user.email);
-          // router.replace({ name: "Profile" });
+          router.replace({ name: "Profile" });
         })
         .catch((error: any) => {
           var errorCode = error.code;

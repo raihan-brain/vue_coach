@@ -36,7 +36,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="submit(coach.id)">
+          <form @submit.prevent="submit(coach)">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label"
                 >Name</label
@@ -89,32 +89,46 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
+import StudentInfo from "../types/StudentInfo";
+import ResponseData from "../types/ResponseData";
+import CoachInfo from "../types/CoachInfo";
+import DataService from "../services/DataService";
 
 export default defineComponent({
   props: {
-    coach: Object,
+    coach: {
+      type: Object,
+      require: true,
+    },
   },
-  setup() {
-    const name = ref("");
-    const email = ref("");
-    const ans = ref("");
-    const submit = async (id: number): Promise<void> => {
-      const newStudent = {
-        st_id: Math.ceil(Math.random() * 100000),
-        name: name.value,
-        email: email.value,
-        ans: ans.value,
-        isAccepted: false,
-      };
-      const res = await axios.get(`http://localhost:3000/users/${id}`);
-      res.data.student.push(newStudent);
-      console.log(res.data);
-      await axios.put(`http://localhost:3000/users/${id}`, res.data);
+  data() {
+    return {
+      name: "" as string,
+      email: "" as string,
+      ans: "" as string,
     };
-
-    return { name, email, ans, submit };
+  },
+  methods: {
+    submit(coach: CoachInfo) {
+      const newStudent: StudentInfo = {
+        st_id: Math.ceil(Math.random() * 100000),
+        name: this.name,
+        email: this.email,
+        isAccepted: false,
+        ans: this.ans,
+      };
+      coach.student?.push(newStudent);
+      console.log("Info: ", coach);
+      DataService.update(coach.id, coach)
+        .then((res: ResponseData) => {
+          console.log(res);
+        })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+      console.log(coach);
+    },
   },
 });
 </script>
@@ -124,8 +138,8 @@ export default defineComponent({
   width: 400px;
 }
 img {
-  height: 200px;
-  width: 200px;
+  height: 180px;
+  width: 180px;
   border-radius: 50%;
 }
 </style>

@@ -3,6 +3,8 @@ export interface coachType {
   firstName: string,
   lastName: string,
   rate: number,
+  email:string,
   description: string,
-  topics: any[]
+  topics: any[],
+  requests: any[]
 }

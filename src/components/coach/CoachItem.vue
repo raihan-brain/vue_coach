@@ -3,9 +3,16 @@
     <li>
       <h2>{{fullName}}</h2>
       <h3>${{rate}}/hr</h3>
-
     </li>
+    <div 
+      class="border p-3 m-auto w-4/12 border rounded bg-red-300 text-white"
+    >
+      <button>request coaching</button>
+    </div>
   </div>
+
+ 
+
 </template>
 
 

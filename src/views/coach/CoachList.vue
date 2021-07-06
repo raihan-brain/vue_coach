@@ -14,15 +14,16 @@
           >refresh</button>
           <!-- Coach registration button -->
           <button
-            @click="newCoach()"
+            @click="newCoach"
             :class="buttonClass"
+            v-if="!loggedIn()"
           >Register As Caoch</button>
         </div>
         <!-- loading screen -->
         <div v-if="isLoading"><Loading/></div>
 
         
-        <ul v-else-if="hasCoach()">
+        <ul v-else-if="hasCoach">
           <!-- show coach -->
           <CoachItem
             v-for="coach in coachList"
@@ -40,7 +41,10 @@
         <!-- if no coach in list  -->
       </Card>
     </section>
-    {{coachList}}
+
+    <!-- debug -->
+    <!-- {{coachList}} -->
+
   </div>
 </template>
 
@@ -60,27 +64,38 @@ import router from '@/router'
 export default defineComponent({
   components:{ Card, Loading, CoachItem, },
 
-  
-  
-  setup() {
-    store.dispatch('getCoachList');
-    let buttonClass = 'border p-2 rounded-lg shadow-md bg-red-300 text-white';
-    let isLoading = store.state.isLoading;
-    let coachList = store.state.coachList;
-    // let coachList:any[];
 
-    function hasCoach(): boolean{
-      // validate if there has any coach
-      return true;
-    }
-    function loadCoaches (){
-      store.dispatch('getCoachList');
-    }
-    return { buttonClass, isLoading, hasCoach, coachList, loadCoaches}
+  
+
+  data() {
+
+    let buttonClass = 'border p-2 rounded-lg shadow-md bg-red-300 text-white';
+    
+    let isLoading = store.state.isLoading;
+    let coachList = this.getCoachList();
+    return { buttonClass, isLoading, coachList, }
   },
 
-  
-
+  methods:{
+    loadCoaches(){
+      store.dispatch('getCoachList');
+    },
+    getCoachList(){
+      this.loadCoaches();
+      return store.state.coachList
+    },
+    loggedIn(){
+      return store.state.loggedIn;
+    },
+    newCoach(){
+      router.push({name: 'Register'})
+    }
+  },
+  computed:{
+    hasCoach(){
+      return store.state.coachList.length>0;
+    },
+  }
 })
 </script>
 

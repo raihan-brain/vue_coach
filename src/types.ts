@@ -1,4 +1,4 @@
-export interface coachType {
+interface coachType {
   id: number,
   firstName: string,
   lastName: string,
@@ -7,3 +7,20 @@ export interface coachType {
   description: string,
   requests: any[]
 }
+
+interface requestType{
+  currentCoachId: any,
+  reqID:number,
+  firstName: string,
+  lastName: string,  
+  email: string,
+  phone: number,
+  message: string
+}
+
+interface authType{
+  email: string,
+  password: any
+}
+
+export {coachType, requestType, authType}

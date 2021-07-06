@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <section>
       <Card>
         <!-- buttons -->
@@ -9,7 +8,7 @@
         >
           <!-- refresh button -->
           <button   
-            @click="loadCoaches()"
+            @click="getCoachList()"
             :class="buttonClass"
           >refresh</button>
           <!-- Coach registration button -->
@@ -20,19 +19,16 @@
           >Register As Caoch</button>
         </div>
         <!-- loading screen -->
-        <div v-if="isLoading"><Loading/></div>
-
+        <div v-if="$store.state.isLoading"><Loading/></div>
         
-        <ul v-else-if="hasCoach">
-          <!-- show coach -->
-          <CoachItem
-            v-for="coach in coachList"
+        <div v-else>
+          <CoachItem 
+            v-for="coach in $store.state.coachList"
             :key="coach.id"
             :coach="coach"
           ></CoachItem>
-
-
-        </ul>
+        </div>
+        <!-- </ul> -->
         <!-- if no coach in list  -->
       </Card>
     </section>
@@ -58,24 +54,20 @@ import router from '@/router'
 
 export default defineComponent({
   components:{ Card, Loading, CoachItem, },
-
+  
+ 
 
   data(){
 
     let buttonClass = 'border p-2 rounded-lg shadow-md bg-red-300 text-white';
     
-    let isLoading = store.state.isLoading;
-    let coachList = this.getCoachList();
-    console.log(coachList);
-    return { buttonClass, isLoading, coachList, }
+    return { buttonClass,}
   },
 
   methods:{
-    loadCoaches(){
-      store.dispatch('getCoachList');
-    },
+    
     getCoachList(){
-      this.loadCoaches();
+      store.dispatch('getCoachList');
       return store.state.coachList
     },
     loggedIn(){

@@ -1,14 +1,15 @@
+/* eslint-disable */
 <template>
-  <div class="border py-3 my-2">
-    <li>
+  <div class="border-4 py-3 my-2">
+    <!-- <li> -->
       <h2>{{fullName}}</h2>
       <h3>${{coach.rate}}/hr</h3>
-      <p class="border-2 border-dashed my-5 max-w-xl m-auto p-6 ">{{coach.description}}</p>
-    </li>
+      <p class="border border-dashed my-5 max-w-xl m-auto p-6 ">{{coach.description}}</p>
+    <!-- </li> -->
     <div 
       class="border p-3 m-auto w-4/12 border rounded bg-red-300 text-white"
     >
-      <button @click="gotoForm">request coaching</button>
+      <button @click="gotoForm(coach.id)">request coaching</button>
     </div>
   </div>
 
@@ -33,8 +34,9 @@ export default defineComponent({
   },
 
   setup(){
-    function gotoForm():void{
-      router.push({name: 'RequestForm'});
+    function gotoForm(currentCoachId:number):void{
+      console.log(currentCoachId)
+      router.push({name: 'RequestForm', params:{id: currentCoachId} });
     }
     return {gotoForm}
   }

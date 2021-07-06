@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "CoachList", component: CoachList},
   { path: "/login", name: "Login", component: Login},
   { path: "/requests", name: "Requests", component: Requests},
-  { path: "/requestForm", name: "RequestForm", component: RequestForm},
+  { path: "/requestForm", name: "RequestForm", component: RequestForm, props: true},
   { path: "/register", name: "Register", component: Register},
   
 ];

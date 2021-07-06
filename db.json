@@ -8,9 +8,7 @@
       "description": "hello test",
       "email": "r@mail.com",
       "requests": [
-        "req det",
-        "req det1",
-        "req det2"
+        
       ]
     },
     {
@@ -21,42 +19,7 @@
       "email": "r@mail.com",
       "description": "hello test",
       "requests": []
-    },
-    {
-      "id": 3,
-      "firstName": "habi",
-      "lastName": "raju",
-      "email": "raju@mail",
-      "rate": 12,
-      "description": "hello test",
-      "requests": []
-    },
-    {
-      "id": 4,
-      "firstName": "asdas",
-      "lastName": "asdasd",
-      "email": "asd@das",
-      "rate": 232,
-      "description": "asdasd",
-      "requests": []
-    },
-    {
-      "id": 5,
-      "firstName": "asdasdasdasd",
-      "lastName": "dasdasddasd",
-      "email": "asdasdadd@adsdasd",
-      "rate": 22,
-      "description": "asdAsSDfsDfsdaaaaaaaaaaaaaaaaaaaaadddddddddddd",
-      "requests": []
-    },
-    {
-      "id": 6,
-      "firstName": "fff",
-      "lastName": "jhgsa",
-      "email": "asda@ads",
-      "rate": 11,
-      "description": "hello asdasdddddddddddddddddasdasdasdasdsdasdasddsssssssss\nsdasdahsdgasdgajsdgasgdaiuusgdiagsdiasda\nasdaskjdgasdg",
-      "requests": []
     }
+    
   ]
 }

@@ -9,14 +9,14 @@
           <label>Email : </label>
           <input 
             type="email"
-            v-model="email"
+            v-model="auth.email"
             class="border shadow p-1 rounded"
           ></li>
         <li class="my-2">
           <label>Password : </label>
           <input 
             type="password"
-            v-model="password"
+            v-model="auth.password"
             class="border shadow p-1 rounded"
           ></li>
       </ul>
@@ -36,17 +36,16 @@ import { defineComponent } from 'vue'
 import Login from './Login.vue'
 import { ref } from '@vue/reactivity';
 import router from '@/router';
+// import { authType}  from '@/types';
 
 export default defineComponent({
   setup() {
+    let auth = {email:ref('').value, password:ref('').value};
     function login(){
-      console.log('logged in');
-      store.state.loggedIn = true;
-      router.push({name: 'CoachList'})
+      store.dispatch('login', auth);
+      if(store.state.loggedIn)router.push({name: 'CoachList'});
     }
-    let email = ref('');
-    let password = ref('');
-    return {login, email, password}
+    return {login, auth }
   },
 })
 </script>

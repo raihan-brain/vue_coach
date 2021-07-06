@@ -25,8 +25,6 @@
 			v-if="isLoggedIn()"
 			@click="logout"
 		>logout</button>
-	
-
   </div>
 </header>
 </template>

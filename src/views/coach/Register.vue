@@ -1,16 +1,16 @@
 <template>
 <div class="border-2 w-5/12 m-auto h-4/6 p-9 my-9 rounded-md ">
   <form @submit.prevent="createNew">
-    <div class="">
+    <div class=" text-center">
       <div id="name"  >
-        <ul class="flex justify-start flex-wrap">
-          <li><label>First Name: </label>
+        <ul class="flex">
+          <li><label>First Name </label>
           <input 
             type="text" 
             class="border-2 shadow-md rounded-lg p-2 mx-2 "
             v-model.lazy.trim="newCoach.firstName"
           ></li>
-          <li><label>Last Name: </label>
+          <li><label>Last Name </label>
           <input 
             type="text" 
             :class="inputDesign"
@@ -20,22 +20,14 @@
       </div>
 
       <div id="details" class="mt-5">
-        <ul >
-          <li><label>Email: </label>
+        <ul class="flex">
+          <li><label>Email</label>
           <input 
             type="email" 
             :class="inputDesign"
             v-model.lazy.trim="newCoach.email"
           ></li>
-          <li><label>Password : </label>
-          <input 
-            type="password"
-            :class="inputDesign"
-            v-model="password"
-          ></li>
-        </ul>
-        <ul>
-          <li><label>Rate/Hrs :</label>
+          <li><label>$/Hrs</label>
           <input 
             type="number" 
             :class="inputDesign"
@@ -43,7 +35,7 @@
           ></li>
         </ul>
         <div class="my-6">
-          <label>Description:</label>
+          <label>Description</label>
           <textarea name="" id="" cols="30" rows="10"
             class="border shadow-md w-full rounded p-3"
             v-model="newCoach.description"
@@ -78,7 +70,6 @@ export default defineComponent({
       email: ref('').value,
       rate: ref().value,
       description: ref('').value,
-      topics: [],
       requests: []
     } as coachType;
     

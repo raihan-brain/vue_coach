@@ -5,6 +5,5 @@ export interface coachType {
   rate: number,
   email:string,
   description: string,
-  topics: any[],
   requests: any[]
 }

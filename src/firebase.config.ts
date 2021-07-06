@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import 'firebase/auth'
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyDPqH1WZ7NpaxEsomUyU2MoR66ajl-ZyOQ",
   authDomain: "vue-coach-5e739.firebaseapp.com",
   projectId: "vue-coach-5e739",
@@ -11,3 +11,5 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+export default firebase;

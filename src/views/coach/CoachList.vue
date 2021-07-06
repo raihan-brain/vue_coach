@@ -28,12 +28,7 @@
           <CoachItem
             v-for="coach in coachList"
             :key="coach.id"
-            :id="coach.id"
-            :firstName="coach.firstName"
-            :lastName="coach.lastName"
-            :rate="coach.rate"
-            :description="coach.description"
-            :topics="coach.topics"
+            :coach="coach"
           ></CoachItem>
 
 
@@ -65,14 +60,13 @@ export default defineComponent({
   components:{ Card, Loading, CoachItem, },
 
 
-  
-
-  data() {
+  data(){
 
     let buttonClass = 'border p-2 rounded-lg shadow-md bg-red-300 text-white';
     
     let isLoading = store.state.isLoading;
     let coachList = this.getCoachList();
+    console.log(coachList);
     return { buttonClass, isLoading, coachList, }
   },
 

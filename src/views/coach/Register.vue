@@ -25,15 +25,22 @@
           <input 
             type="email" 
             :class="inputDesign"
-            v-model.lazy.trim="newCoach.email"
+            v-model.lazy.trim="auth.email"
           ></li>
-          <li><label>$/Hrs</label>
+          <li><label>Password</label>
+          <input 
+            type="password" 
+            :class="inputDesign"
+            v-model="auth.password"
+          ></li>
+        </ul>
+        <ul>
+          <label>$/Hrs</label>
           <input 
             type="number" 
             :class="inputDesign"
             v-model.number="newCoach.rate"
-          ></li>
-        </ul>
+          ></ul>
         <div class="my-6">
           <label>Description</label>
           <textarea name="" id="" cols="30" rows="10"
@@ -54,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { coachType } from '@/types';
+import { authType, coachType, payloadWithAuthType } from '@/types';
 import { ref } from '@vue/reactivity';
 import router from '@/router';
 import store from '@/store';
@@ -62,26 +69,35 @@ import store from '@/store';
 export default defineComponent({
   data() {
     let inputDesign = 'border-2 shadow-md rounded-lg p-2 mx-2 ';
-    let password = ref('');
+
+    let auth = {
+      email: ref('').value,
+      password: ref('').value
+    } as authType;
+
     let newCoach = {
-      id : store.state.coachList.length+1,
+      id: '', // get UUID from firebase
       firstName: ref('').value,
       lastName: ref('').value,
-      email: ref('').value,
+      email: auth.email,
       rate: ref().value,
       description: ref('').value,
       requests: []
     } as coachType;
     
+    let payload= {
+      coach: newCoach,
+      auth: auth
+    }as payloadWithAuthType
     
 
     function createNew(){
       console.log(newCoach);   
-      store.dispatch('createNewCoach', newCoach)
+      store.dispatch('createNewCoach', payload)
       router.push({name: 'CoachList'})   
     }
 
-    return{ inputDesign, createNew, newCoach, password}
+    return{ inputDesign, createNew, payload, auth, newCoach}
   },
 })
 </script>

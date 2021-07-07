@@ -1,5 +1,5 @@
 interface coachType {
-  id: number,
+  id: any,
   firstName: string,
   lastName: string,
   rate: number,
@@ -23,4 +23,9 @@ interface authType{
   password: any
 }
 
-export {coachType, requestType, authType}
+interface payloadWithAuthType{
+  auth: authType,
+  coach: coachType
+}
+
+export {coachType, requestType, authType, payloadWithAuthType}

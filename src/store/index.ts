@@ -1,8 +1,10 @@
 import { createStore } from "vuex";
 import axios from 'axios';
-import { coachType, requestType } from "@/types";
+import { coachType, payloadWithAuthType, requestType } from "@/types";
 import firebase from "@/firebase.config";
 import router from "@/router";
+import mutations from './modules/coaches' 
+import actions from './modules/coaches' 
 
 
 export default createStore({
@@ -36,10 +38,30 @@ export default createStore({
       state.coachList = data;
     },
 
-    async CREATE_COACH(state, newCoach){
-      console.log(newCoach);
-      await axios.post(state.baseURL,newCoach);
+    async CREATE_COACH(state, payload:payloadWithAuthType){
+      state.isLoading = true; // started loading
+      console.log(payload);
+      const newCoach = payload.coach;
+      const auth = payload.auth;
+      let success = false;
+      newCoach.email = auth.email;
+      
+      await firebase.auth().createUserWithEmailAndPassword(auth.email, auth.password)
+            .then((userCredential) =>{
+              newCoach.id = userCredential.user?.uid;
+              console.log("user = "+userCredential.user?.uid);
+              success = true;
+            } )
+            .catch((err) =>{
+              console.log(err);
+            });
+
+
+      if(success)await axios.post(state.baseURL,newCoach);
       // await axios.put(`http://localhost:3000/coach-list/${newCoach.id}`,newCoach);
+      alert(success ? 'registration success' : 'registration failed');
+      router.push(success ? {name: 'CoachList'} : {name: 'Register'});
+      state.isLoading = false;
     },
 
     async LOGIN(state, auth){
@@ -51,7 +73,7 @@ export default createStore({
         router.push({name: 'CoachList'});
       })
       .catch((err:string) => {
-        console.log(`there was an error : ${err}`);
+        console.log(`${err}`);
       });
     }
 
@@ -60,7 +82,7 @@ export default createStore({
   actions:{
     async getCoachList({commit}){
       this.state.isLoading = true;
-      await axios.get('http://localhost:3000/coach-list')
+      await axios.get(this.state.baseURL)
           .then(res => {
             commit('GET_COACH_LIST', res.data)
             console.log('data fetched' + res.data);
@@ -73,8 +95,8 @@ export default createStore({
       this.state.isLoading = false;
     },
 
-    createNewCoach({commit}, newCoach){
-      commit('CREATE_COACH', newCoach);
+    createNewCoach({commit}, payload:payloadWithAuthType){
+      commit('CREATE_COACH', payload);
     },
 
     makeRequest({commit},req){
@@ -86,7 +108,10 @@ export default createStore({
     }
   },
 
-
+  // modules:{
+  //   mutations,
+  //   actions
+  // },
   getters:{
     
   }

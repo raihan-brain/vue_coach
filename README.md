@@ -4,6 +4,10 @@
 ```
 npm install
 ```
+### start local database
+```
+json-server --watch db.json
+```
 
 ### Compiles and hot-reloads for development
 ```

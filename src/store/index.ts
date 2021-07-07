@@ -43,38 +43,39 @@ export default createStore({
       console.log(payload);
       const newCoach = payload.coach;
       const auth = payload.auth;
-      let success = false;
       newCoach.email = auth.email;
-      
+
       await firebase.auth().createUserWithEmailAndPassword(auth.email, auth.password)
             .then((userCredential) =>{
+              alert('registration success');
               newCoach.id = userCredential.user?.uid;
-              console.log("user = "+userCredential.user?.uid);
-              success = true;
-            } )
+              axios.post(state.baseURL,newCoach);
+              router.push({name: 'CoachList'});
+            })
             .catch((err) =>{
-              console.log(err);
+              alert('registration failed \n' + err);
+              router.push({name: 'Register'});
+              // console.log(err);
             });
 
 
-      if(success)await axios.post(state.baseURL,newCoach);
-      // await axios.put(`http://localhost:3000/coach-list/${newCoach.id}`,newCoach);
-      alert(success ? 'registration success' : 'registration failed');
-      router.push(success ? {name: 'CoachList'} : {name: 'Register'});
+      
       state.isLoading = false;
     },
 
     async LOGIN(state, auth){
-      firebase.auth().signInWithEmailAndPassword(auth.email, auth.password)
-      .then((userCredential:any)=>{
-        state.loggedIn = true;
-        const user = userCredential.user;
-        console.log(user);
-        router.push({name: 'CoachList'});
-      })
-      .catch((err:string) => {
-        console.log(`${err}`);
-      });
+      await firebase.auth().signInWithEmailAndPassword(auth.email, auth.password)
+        .then((userCredential:any)=>{
+          state.loggedIn = true;
+          const user = userCredential.user;
+          console.log(user);
+          router.push({name: 'CoachList'});
+          alert('login successful');
+        })
+        .catch((err:string) => {
+          alert('login failed\n' + err);
+          console.log(`${err}`);
+        })
     }
 
 

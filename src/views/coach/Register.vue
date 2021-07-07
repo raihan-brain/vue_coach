@@ -67,6 +67,7 @@ import router from '@/router';
 import store from '@/store';
 
 export default defineComponent({
+
   data() {
     let inputDesign = 'border-2 shadow-md rounded-lg p-2 mx-2 ';
 
@@ -94,7 +95,7 @@ export default defineComponent({
     function createNew(){
       console.log(newCoach);   
       store.dispatch('createNewCoach', payload)
-      router.push({name: 'CoachList'})   
+      // router.push({name: 'CoachList'})   
     }
 
     return{ inputDesign, createNew, payload, auth, newCoach}

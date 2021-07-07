@@ -20,7 +20,7 @@
         </div>
         <!-- loading screen -->
         <div v-if="$store.state.isLoading"><Loading/></div>
-        
+        <div v-else-if="!hasCoach"> no coach found</div>
         <div v-else>
           <CoachItem 
             v-for="coach in $store.state.coachList"
@@ -30,6 +30,7 @@
         </div>
         <!-- </ul> -->
         <!-- if no coach in list  -->
+
       </Card>
     </section>
 
@@ -54,8 +55,10 @@ import router from '@/router'
 
 export default defineComponent({
   components:{ Card, Loading, CoachItem, },
-  
- 
+  beforeCreate(){
+    store.dispatch('getCoachList');
+
+  },
 
   data(){
 

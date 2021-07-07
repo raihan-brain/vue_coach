@@ -22,31 +22,23 @@
 import StudentInfoCard from "@/components/StudentInfoCard.vue";
 import { defineComponent } from "vue";
 import StudentInfo from "../types/StudentInfo";
-import ResponseData from "../types/ResponseData";
 import CoachInfo from "../types/CoachInfo";
-import DataService from "../services/DataService";
+import { mapActions, mapState } from "vuex";
 
 export default defineComponent({
   name: "Profile",
   components: { StudentInfoCard },
   data() {
     return {
-      coach: {} as CoachInfo,
       selectedStudent: [] as StudentInfo[] | undefined,
       nonSelectedStudent: [] as StudentInfo[] | undefined,
     };
   },
+  computed: {
+    ...mapState("CoachList", ["loggedInUser"]),
+  },
   methods: {
-    retrieveCoachListByEmail() {
-      DataService.findByEmail(this.$store.state.userName).then(
-        (res: ResponseData) => {
-          console.log(res.data[0]);
-          this.selected(res.data[0]);
-          this.nonSelected(res.data[0]);
-          this.coach = res.data[0];
-        }
-      );
-    },
+    ...mapActions("CoachList", ["acceptRequest"]),
     selected(data: CoachInfo) {
       this.selectedStudent = data.student?.filter(
         (st: StudentInfo) => st.isAccepted
@@ -58,18 +50,17 @@ export default defineComponent({
       );
     },
     saveChange(id: number) {
-      this.coach.student?.forEach((st: StudentInfo) => {
+      this.loggedInUser.student?.forEach((st: StudentInfo) => {
         if (st.st_id === id) {
           st.isAccepted = true;
         }
       });
-      DataService.update(this.coach.id, this.coach).then(() => {
-        this.retrieveCoachListByEmail();
-      });
+      this.acceptRequest(this.loggedInUser);
     },
   },
   mounted() {
-    this.retrieveCoachListByEmail();
+    this.selected(this.loggedInUser);
+    this.nonSelected(this.loggedInUser);
   },
 });
 </script>

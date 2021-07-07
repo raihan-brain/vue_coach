@@ -34,36 +34,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import firebase from "../utilities/firebase";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { mapMutations } from "vuex";
 
 export default defineComponent({
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const email = ref("");
-    const password = ref("");
-    const submit = () => {
+  data() {
+    return {
+      email: "" as string,
+      password: "" as string,
+    };
+  },
+  methods: {
+    ...mapMutations("CoachList", ["SET_LOGGED_IN_USER"]),
+    submit(): void {
       firebase
         .auth()
-        .signInWithEmailAndPassword(email.value, password.value)
+        .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential: any) => {
           // Signed in
           var user = userCredential.user;
           console.log(user);
-          store.commit("SET_USER", user.email);
-          router.replace({ name: "Profile" });
+          this.SET_LOGGED_IN_USER(user.email);
+          this.$router.replace({ name: "Profile" });
         })
         .catch((error: any) => {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorCode, errorMessage);
         });
-    };
-
-    return { email, password, submit };
+    },
   },
 });
 </script>

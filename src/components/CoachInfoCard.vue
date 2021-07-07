@@ -91,9 +91,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import StudentInfo from "../types/StudentInfo";
-import ResponseData from "../types/ResponseData";
 import CoachInfo from "../types/CoachInfo";
-import DataService from "../services/DataService";
+import { mapActions } from "vuex";
 
 export default defineComponent({
   props: {
@@ -110,6 +109,7 @@ export default defineComponent({
     };
   },
   methods: {
+    ...mapActions("Request", ["sendRequest"]),
     submit(coach: CoachInfo) {
       const newStudent: StudentInfo = {
         st_id: Math.ceil(Math.random() * 100000),
@@ -119,15 +119,7 @@ export default defineComponent({
         ans: this.ans,
       };
       coach.student?.push(newStudent);
-      console.log("Info: ", coach);
-      DataService.update(coach.id, coach)
-        .then((res: ResponseData) => {
-          console.log(res);
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
-      console.log(coach);
+      this.sendRequest(coach);
     },
   },
 });

@@ -1,9 +1,10 @@
 <template>
-  <div class="card">
-    <h3>Name: {{ studentObj.name }}</h3>
+  <div class="card m-5 p-5">
+    <h3 class="">Name: {{ studentObj.name }}</h3>
     <h5>Email: {{ studentObj.email }}</h5>
     <p>{{ studentObj.ans }}</p>
     <button
+      class="btn btn-outline-primary"
       v-if="!studentObj.isAccepted"
       :disabled="studentObj.isAccepted"
       @click="$emit('saveChange', studentObj.st_id)"

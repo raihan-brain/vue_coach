@@ -6,7 +6,7 @@ class TutorialDataService {
   }
 
   get(id: any): Promise<any> {
-    return http.get(`/users..json/${id}`);
+    return http.get(`/users.json/${id}`);
   }
 
   create(data: any): Promise<any> {
@@ -14,7 +14,7 @@ class TutorialDataService {
   }
 
   update(id: any, data: any): Promise<any> {
-    return http.put(`/users.json/${id}`, data);
+    return http.put(`/users/${id - 1}.json`, data);
   }
 
   findByEmail(email: string): Promise<any> {

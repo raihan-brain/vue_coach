@@ -56,11 +56,15 @@ export default defineComponent({
         }
       });
       this.acceptRequest(this.loggedInUser);
+      this.load();
+    },
+    load() {
+      this.selected(this.loggedInUser);
+      this.nonSelected(this.loggedInUser);
     },
   },
-  mounted() {
-    this.selected(this.loggedInUser);
-    this.nonSelected(this.loggedInUser);
+  beforeMount() {
+    this.load();
   },
 });
 </script>

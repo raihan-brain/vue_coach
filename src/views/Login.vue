@@ -12,6 +12,7 @@
               v-model="email"
               name="email"
               placeholder="Email"
+              required
             />
           </div>
           <div class="form-inputs">
@@ -20,6 +21,7 @@
               v-model="password"
               name="password"
               placeholder="Password"
+              required
             />
           </div>
           <input
@@ -52,9 +54,7 @@ export default defineComponent({
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential: any) => {
-          // Signed in
           var user = userCredential.user;
-          console.log(user);
           this.SET_LOGGED_IN_USER(user.email);
           this.$router.replace({ name: "Profile" });
         })

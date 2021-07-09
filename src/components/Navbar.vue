@@ -12,13 +12,22 @@
               loggedInUser.name
             }}</router-link>
           </li>
-          <li v-else class="nav-item ms-5">
-            <router-link class="nav-link" to="/login"
-              ><button className="btn btn-sm btn-outline-danger">
-                Login
-              </button></router-link
-            >
-          </li>
+          <div v-else class="d-flex">
+            <li class="nav-item ms-5">
+              <router-link class="nav-link" to="/register"
+                ><button className="btn btn-sm btn-outline-info">
+                  Register
+                </button></router-link
+              >
+            </li>
+            <li class="nav-item ms-4">
+              <router-link class="nav-link" to="/login"
+                ><button className="btn btn-sm btn-outline-danger">
+                  Login
+                </button></router-link
+              >
+            </li>
+          </div>
         </ul>
       </div>
     </nav>

@@ -9,7 +9,7 @@
           <div class="form-inputs">
             <input
               type="email"
-              v-model="email"
+              v-model.lazy.trim="email"
               name="email"
               placeholder="Email"
               required
@@ -18,7 +18,7 @@
           <div class="form-inputs">
             <input
               type="password"
-              v-model="password"
+              v-model.lazy.trim="password"
               name="password"
               placeholder="Password"
               required
@@ -82,10 +82,5 @@ export default defineComponent({
 }
 input:focus {
   outline: none;
-}
-.form-inputs p {
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  color: #f00e0e;
 }
 </style>

@@ -1,3 +1,4 @@
+import { getters } from "./getters";
 import { RootState } from "./../types";
 import { Module } from "vuex";
 import { CoachListState } from "./types";
@@ -10,4 +11,5 @@ export const CoachList: Module<CoachListState, RootState> = {
   state,
   mutations,
   actions,
+  getters,
 };

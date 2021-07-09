@@ -13,8 +13,11 @@ class TutorialDataService {
     return http.post("/users.json", data);
   }
 
+  createStudent(id: any, data: any): Promise<any> {
+    return http.post(`/users/${id}/student.json`, data);
+  }
   update(id: any, data: any): Promise<any> {
-    return http.put(`/users/${id - 1}.json`, data);
+    return http.put(`/users/${id}.json`, data);
   }
 
   findByEmail(email: string): Promise<any> {

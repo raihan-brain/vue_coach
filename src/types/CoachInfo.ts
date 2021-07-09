@@ -1,7 +1,7 @@
 import StudentInfo from "./StudentInfo";
 
 export default interface CoachInfo {
-  id: number;
+  id?: string;
   name: string;
   email: string;
   course: string;

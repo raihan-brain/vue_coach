@@ -36,7 +36,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="submit(coach)">
+          <form @submit.prevent="submit(coach.id)">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label"
                 >Name</label
@@ -110,16 +110,14 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("Request", ["sendRequest"]),
-    submit(coach: CoachInfo) {
+    submit(id: string) {
       const newStudent: StudentInfo = {
-        st_id: Math.ceil(Math.random() * 100000),
         name: this.name,
         email: this.email,
         isAccepted: false,
         ans: this.ans,
       };
-      coach.student?.push(newStudent);
-      this.sendRequest(coach);
+      this.sendRequest({ id, newStudent });
     },
   },
 });

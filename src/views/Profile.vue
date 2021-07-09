@@ -2,16 +2,16 @@
   <div class="container mt-4">
     <div>
       <h1>Request</h1>
-      <div v-for="studentObj in nonSelectedStudent" :key="studentObj.st_id">
+      <div v-for="studentObj in nonSelectedStudent" :key="studentObj.id">
         <student-info-card
           :studentObj="studentObj"
-          @saveChange="saveChange(studentObj.st_id)"
+          @saveChange="saveChange(studentObj.email)"
         />
       </div>
     </div>
     <div>
       <h1>Student</h1>
-      <div v-for="studentObj in selectedStudent" :key="studentObj.st_id">
+      <div v-for="studentObj in selectedStudent" :key="studentObj.id">
         <student-info-card :studentObj="studentObj" />
       </div>
     </div>
@@ -22,7 +22,6 @@
 import StudentInfoCard from "@/components/StudentInfoCard.vue";
 import { defineComponent } from "vue";
 import StudentInfo from "../types/StudentInfo";
-import CoachInfo from "../types/CoachInfo";
 import { mapActions, mapState } from "vuex";
 
 export default defineComponent({
@@ -39,22 +38,32 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("CoachList", ["acceptRequest"]),
-    selected(data: CoachInfo) {
-      this.selectedStudent = data.student?.filter(
-        (st: StudentInfo) => st.isAccepted
-      );
-    },
-    nonSelected(data: CoachInfo) {
-      this.nonSelectedStudent = data.student?.filter(
-        (st: StudentInfo) => !st.isAccepted
-      );
-    },
-    saveChange(id: number) {
-      this.loggedInUser.student?.forEach((st: StudentInfo) => {
-        if (st.st_id === id) {
-          st.isAccepted = true;
+    selected(data: any) {
+      const filteredItem: StudentInfo[] = [];
+      for (const key in data.student) {
+        if (data.student[key].isAccepted) {
+          filteredItem.push({ ...data.student[key], id: key });
         }
-      });
+      }
+      this.selectedStudent = filteredItem;
+    },
+    nonSelected(data: any) {
+      const filteredItem: StudentInfo[] = [];
+      for (const key in data.student) {
+        if (!data.student[key].isAccepted) {
+          filteredItem.push({ ...data.student[key], id: key });
+        }
+      }
+      this.nonSelectedStudent = filteredItem;
+      console.log("student", this.nonSelectedStudent);
+    },
+    saveChange(email: string) {
+      for (const key in this.loggedInUser.student) {
+        if (this.loggedInUser.student[key].email === email) {
+          this.loggedInUser.student[key].isAccepted = true;
+        }
+      }
+      console.log(this.loggedInUser);
       this.acceptRequest(this.loggedInUser);
       this.load();
     },

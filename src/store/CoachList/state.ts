@@ -3,7 +3,7 @@ import { CoachListState } from "./types";
 export const state: CoachListState = {
   CoachList: [],
   loggedInUser: {
-    id: 0,
+    id: "",
     name: "",
     email: "",
     course: "",

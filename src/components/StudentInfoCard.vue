@@ -7,7 +7,7 @@
       class="btn btn-outline-primary"
       v-if="!studentObj.isAccepted"
       :disabled="studentObj.isAccepted"
-      @click="$emit('saveChange', studentObj.st_id)"
+      @click="$emit('saveChange', studentObj.email)"
     >
       Accept
     </button>

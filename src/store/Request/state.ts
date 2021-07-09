@@ -2,7 +2,7 @@ import { RequestState } from "./types";
 
 export const state: RequestState = {
   studentInfo: {
-    st_id: 0,
+    id: "",
     name: "",
     email: "",
     isAccepted: false,

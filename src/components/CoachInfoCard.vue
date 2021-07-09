@@ -91,7 +91,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import StudentInfo from "../types/StudentInfo";
-import CoachInfo from "../types/CoachInfo";
 import { mapActions } from "vuex";
 
 export default defineComponent({

@@ -11,6 +11,9 @@ export const actions: ActionTree<CoachListState, RootState> = {
       commit("SET_COACHLIST", res.data);
     });
   },
+  addCoach({ state }, payload) {
+    DataService.create(payload);
+  },
   acceptRequest({ commit }, payload: CoachInfo) {
     DataService.update(payload.id, payload).then(() => {
       commit("SET_LOGGED_IN_USER", payload.email);

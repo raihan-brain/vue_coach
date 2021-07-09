@@ -55,7 +55,6 @@ export default defineComponent({
         }
       }
       this.nonSelectedStudent = filteredItem;
-      console.log("student", this.nonSelectedStudent);
     },
     saveChange(email: string) {
       for (const key in this.loggedInUser.student) {
@@ -63,7 +62,6 @@ export default defineComponent({
           this.loggedInUser.student[key].isAccepted = true;
         }
       }
-      console.log(this.loggedInUser);
       this.acceptRequest(this.loggedInUser);
       this.load();
     },

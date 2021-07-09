@@ -83,7 +83,7 @@ export default defineComponent({
     ...mapGetters("CoachList", ["getCoachListLength"]),
   },
   methods: {
-    // ...mapActions("CoachList", ["getCoachList"]),
+    ...mapActions("CoachList", ["addCoach"]),
     handleImageUpload(e: any) {
       const imageData = new FormData();
       imageData.set("key", "b3ce459487a7921c3a173fc17b867445");
@@ -110,8 +110,7 @@ export default defineComponent({
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          console.log(newCoach);
-          DataService.create(newCoach);
+          this.addCoach(newCoach);
           alert("registration success");
           this.$router.replace({ path: "/" });
         })

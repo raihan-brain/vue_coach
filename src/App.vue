@@ -11,6 +11,3 @@ export default defineComponent({
   components: { Navbar },
 });
 </script>
-
-<style>
-</style>

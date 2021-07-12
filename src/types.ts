@@ -10,7 +10,7 @@ interface coachType {
 
 interface requestType{
   currentCoachId: any,
-  reqID:number,
+  reqID:any,
   firstName: string,
   lastName: string,  
   email: string,

@@ -11,20 +11,20 @@ export default createStore({
   state:{
     baseURL: 'http://localhost:3000/coach-list/',
     coachList:[],
+    requestsList: [],
     isLoading: false,
     loggedIn: false,
+    uid: ''
     // newCoach:{} as coachType 
   },
   mutations:{
 
     async MAKE_REQUEST(state,req){
-      console.log("creating req");
+      console.log("creating req to -> " + req.currentCoachId);
       
       const requestDetails = req; // call request api 
       const dir = `${state.baseURL}${req.currentCoachId}`;
       const coach = (await axios.get(dir)).data;
-      const reqID = coach.requests.length+1;
-      coach.request.id = reqID;
       if(coach.requests.indexOf(requestDetails.email)<0){
         coach.requests.push(requestDetails); 
         await axios.put(dir, coach);
@@ -34,18 +34,17 @@ export default createStore({
 
 
     GET_COACH_LIST(state, data){
-      console.log('comitted');
       state.coachList = data;
     },
 
-    async CREATE_COACH(state, payload:payloadWithAuthType){
+    CREATE_COACH(state, payload:payloadWithAuthType){
       state.isLoading = true; // started loading
       console.log(payload);
       const newCoach = payload.coach;
       const auth = payload.auth;
       newCoach.email = auth.email;
 
-      await firebase.auth().createUserWithEmailAndPassword(auth.email, auth.password)
+      firebase.auth().createUserWithEmailAndPassword(auth.email, auth.password)
             .then((userCredential) =>{
               alert('registration success');
               newCoach.id = userCredential.user?.uid;
@@ -55,19 +54,16 @@ export default createStore({
             .catch((err) =>{
               alert('registration failed \n' + err);
               router.push({name: 'Register'});
-              // console.log(err);
             });
-
-
-      
       state.isLoading = false;
     },
 
-    async LOGIN(state, auth){
-      await firebase.auth().signInWithEmailAndPassword(auth.email, auth.password)
+    LOGIN(state, auth){
+      firebase.auth().signInWithEmailAndPassword(auth.email, auth.password)
         .then((userCredential:any)=>{
           state.loggedIn = true;
           const user = userCredential.user;
+          state.uid = userCredential.user?.uid;
           console.log(user);
           router.push({name: 'CoachList'});
           alert('login successful');
@@ -76,11 +72,36 @@ export default createStore({
           alert('login failed\n' + err);
           console.log(`${err}`);
         })
+    },
+
+    LOGOUT(state){
+      state.loggedIn = false;
+      state.uid = '';
+      state.requestsList = [];
+      router.push({name: 'CoachList'})
+    },
+
+    async GET_REQUESTS_LIST(state){
+      state.isLoading = true;
+      const dir = `${state.baseURL}${state.uid}`
+      await axios.get(dir)
+        .then((res) => {
+          state.requestsList = res.data.requests;
+          console.log(state.requestsList);
+          state.isLoading = false;
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+      state.isLoading = false;
     }
 
-
   },
+
+
+
   actions:{
+
     async getCoachList({commit}){
       this.state.isLoading = true;
       await axios.get(this.state.baseURL)
@@ -96,17 +117,28 @@ export default createStore({
       this.state.isLoading = false;
     },
 
-    createNewCoach({commit}, payload:payloadWithAuthType){
-      commit('CREATE_COACH', payload);
+    async createNewCoach({commit}, payload:payloadWithAuthType){
+      await commit('CREATE_COACH', payload);
     },
 
     makeRequest({commit},req){
+      // console.log(req.currentCoachId);
       commit('MAKE_REQUEST',req);
     },
 
-    login({commit}, auth){
-      commit('LOGIN', auth);
+    async login({commit}, auth){
+      await commit('LOGIN', auth);
+    },
+
+    logout({ commit }){
+      commit('LOGOUT');
+    },
+
+    async getRequestsList({commit}){
+      console.log('get req list');
+      await commit('GET_REQUESTS_LIST');      
     }
+
   },
 
   // modules:{

@@ -11,12 +11,14 @@
           <input 
             type="text" 
             class="border-2 shadow-md rounded-lg p-2 mx-2 "
+            required="true"
             v-model.lazy.trim="newRequest.firstName"
           ></li>
           <li><label>Last Name </label>
           <input 
             type="text" 
             :class="inputDesign"
+            required="true"
             v-model.lazy.trim="newRequest.lastName"
           ></li>
         </ul>
@@ -28,12 +30,14 @@
           <input 
             type="email" 
             :class="inputDesign"
+            required="true"
             v-model.lazy.trim="newRequest.email"
           ></li>
           <li><label>Phone</label>
           <input 
             type="number" 
             :class="inputDesign"
+            required="true"
             v-model.number="newRequest.phone"
           ></li>
         </ul>
@@ -80,6 +84,7 @@ export default defineComponent({
     
 
     function makeRequest():void{
+      // console.log('reqform -> makeReq -> id = ' + newRequest.currentCoachId);
       store.dispatch('makeRequest', newRequest);
     }
     

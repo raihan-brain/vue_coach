@@ -48,8 +48,7 @@ export default defineComponent({
 			return store.state.loggedIn;
 		},
 		logout(){
-			// code for logging out user  
-			store.state.loggedIn = false;
+			store.dispatch('logout') 
 			console.log('logged out');
 		}
 	}

@@ -1,6 +1,9 @@
 /* eslint-disable */
 <template>
-  <div class="border-4 py-3 my-2">
+  <div 
+    v-if="coach.id !== $store.state.uid"  
+    class="border-4 py-3 my-2"
+  >
     <!-- <li> -->
       <h2>{{fullName}}</h2>
       <h3>${{coach.rate}}/hr</h3>

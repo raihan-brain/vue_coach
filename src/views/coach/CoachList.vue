@@ -16,7 +16,7 @@
             @click="newCoach"
             :class="buttonClass"
             v-if="!loggedIn()"
-          >Register As Caoch</button>
+          >Register As Coach</button>
         </div>
         <!-- loading screen -->
         <div v-if="$store.state.isLoading"><Loading/></div>

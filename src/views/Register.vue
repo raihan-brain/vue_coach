@@ -67,7 +67,6 @@ import axios from "axios";
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 import firebase from "../utilities/firebase";
-import DataService from "../services/DataService";
 
 export default defineComponent({
   data() {

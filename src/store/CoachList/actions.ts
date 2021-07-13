@@ -1,22 +1,21 @@
+import CoachData from "@/services/DataService/CoachData";
+import HandleRequest from "@/services/DataService/HandleRequest";
 import CoachInfo from "@/types/CoachInfo";
-import { RootState } from "./../types";
-import { ActionTree } from "vuex";
-import { CoachListState } from "./types";
-import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
+import { ActionTree } from "vuex";
+import { RootState } from "./../types";
+import { CoachListState } from "./types";
 
 export const actions: ActionTree<CoachListState, RootState> = {
-  getCoachList({ commit }) {
-    DataService.getAll().then((res: ResponseData) => {
-      commit("SET_COACHLIST", res.data);
-    });
+  async getCoachList({ commit }) {
+    const res: ResponseData = await CoachData.getAllCoachList();
+    commit("SET_COACHLIST", res.data);
   },
-  addCoach({ state }, payload) {
-    DataService.create(payload);
+  async addCoach({ state }, payload: CoachInfo) {
+    await CoachData.createCoach(payload);
   },
-  acceptRequest({ commit }, payload: CoachInfo) {
-    DataService.update(payload.id, payload).then(() => {
-      commit("SET_LOGGED_IN_USER", payload.email);
-    });
+  async acceptRequest({ commit }, payload: CoachInfo) {
+    await HandleRequest.acceptRequestUpdate(payload.id, payload);
+    commit("SET_LOGGED_IN_USER", payload.email);
   },
 };

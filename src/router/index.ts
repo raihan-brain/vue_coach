@@ -1,20 +1,21 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import CoachList from "@/views/coach/CoachList.vue";
-import Login from "@/views/student/Login.vue";
-// import ContactCoach from "@/views/request/ContactCoach.vue";
-import Requests from "@/components/coach/Requests.vue";
-import RequestForm from "@/components/coach/RequestForm.vue";
-import Register from "@/views/coach/Register.vue";
-
+import CoachDetails from "@/pages/coaches/CoachDetails.vue";
+import CoachList from "@/pages/coaches/CoachList.vue";
+import CoachRegistration from "@/pages/coaches/CoachRegistration.vue";
+import ContactCoach from "@/pages/requests/ContactCoach.vue";
+import RequestsRecieved from "@/pages/requests/RequestsRecieved.vue";
+import NotFound from "@/pages/NotFound.vue";
 
 const routes: Array<RouteRecordRaw> = [
- 
-  { path: "/", name: "CoachList", component: CoachList},
-  { path: "/login", name: "Login", component: Login},
-  { path: "/requests", name: "Requests", component: Requests},
-  { path: "/requestForm", name: "RequestForm", component: RequestForm, props: true},
-  { path: "/register", name: "Register", component: Register},
-  
+// const routes: Array<any> = [
+  { path: "/", redirect:"/coaches" },
+  { path: "/coaches", name: "Coaches", component: CoachList },
+  { path: "/coaches/:id", component: CoachDetails, props:true, children: [
+    { path: "contact", component: ContactCoach  }
+  ]},
+  { path: "/register", name:"Register", component: CoachRegistration },
+  { path: "/requests", name:"Requests", component: RequestsRecieved },
+  { path: "/:notFound(.*)", name:"NotFound", component: NotFound },
 ];
 
 const router = createRouter({

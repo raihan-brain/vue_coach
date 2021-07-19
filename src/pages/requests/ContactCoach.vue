@@ -36,7 +36,7 @@ export default defineComponent({
 
       // create request code goes here
       const requestPayload = {
-        coachId: this.$route.params.id,
+        // coachId: this.$route.params.id,
         email: this.email,
         message: this.message
       } as requestPayloadType;

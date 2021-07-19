@@ -1,13 +1,37 @@
+import requestServices from '@/Api/services/requestServices'
 import { requestType, requestPayloadType } from './types'
 
 export default{
-  contactCoach(context:any, payload:requestPayloadType){
+
+  async contactCoach(context:any, payload:requestPayloadType){
     const newRequest:requestType = {
-      id: new Date().toISOString(), //dummy id
-      coachId: payload.coachId,
       userEmail: payload.email,
       userMessage: payload.message
     }
-    context.commit('addRequest', newRequest)
-  }
+    try {
+      await requestServices.postRequest(context.rootGetters.userId, newRequest);
+      context.commit('addRequest', newRequest);
+      alert('message sent successfully');
+    } catch (error) {
+      alert(error);
+    }
+    // console.log(res);
+
+  },
+
+  async getRequests(context){
+    const coachId =  context.rootGetters.userId;
+    try {
+      const res = await requestServices.getRequests(coachId);
+      const resData = res.data;
+      const fetchedRequests:requestType[] = [];
+      for(const key in resData){
+        fetchedRequests.push(resData[key]);
+      }    
+      context.commit('setRequests', fetchedRequests);
+    } catch (error) {
+      alert(error);
+    }
+    
+  }  
 }

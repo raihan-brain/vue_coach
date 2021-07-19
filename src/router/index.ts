@@ -5,6 +5,7 @@ import CoachRegistration from "@/pages/coaches/CoachRegistration.vue";
 import ContactCoach from "@/pages/requests/ContactCoach.vue";
 import RequestsRecieved from "@/pages/requests/RequestsRecieved.vue";
 import NotFound from "@/pages/NotFound.vue";
+import UserAuth from "@/pages/auth/UserAuth.vue"
 
 const routes: Array<RouteRecordRaw> = [
 // const routes: Array<any> = [
@@ -14,6 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: "contact", component: ContactCoach  }
   ]},
   { path: "/register", name:"Register", component: CoachRegistration },
+  { path: "/auth", name:"Auth", component: UserAuth },
   { path: "/requests", name:"Requests", component: RequestsRecieved },
   { path: "/:notFound(.*)", name:"NotFound", component: NotFound },
 ];

@@ -3,8 +3,6 @@ export interface RootState{
 }
 
 export interface requestType{
-  id: string, 
-  coachId: any,
   userEmail: string,
   userMessage: string
 }

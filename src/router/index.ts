@@ -1,23 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import CoachDetails from "@/pages/coaches/CoachDetails.vue";
-import CoachList from "@/pages/coaches/CoachList.vue";
-import CoachRegistration from "@/pages/coaches/CoachRegistration.vue";
-import ContactCoach from "@/pages/requests/ContactCoach.vue";
-import RequestsRecieved from "@/pages/requests/RequestsRecieved.vue";
-import NotFound from "@/pages/NotFound.vue";
-import UserAuth from "@/pages/auth/UserAuth.vue"
-
 const routes: Array<RouteRecordRaw> = [
 // const routes: Array<any> = [
   { path: "/", redirect:"/coaches" },
-  { path: "/coaches", name: "Coaches", component: CoachList },
-  { path: "/coaches/:id", component: CoachDetails, props:true, children: [
-    { path: "contact", component: ContactCoach  }
+  { path: "/coaches", name: "Coaches", component: () => import(/* webpackChunkName: "Coaches" */ "@/pages/coaches/CoachList.vue")},
+  { path: "/coaches/:id", component: () => import(/* webpackChunkName: "CoachDetails" */ "@/pages/coaches/CoachDetails.vue") , props:true, children: [
+    { path: "contact", component: () => import(/* webpackChunkName: "ContactCoach" */ "@/pages/requests/ContactCoach.vue")  }
   ]},
-  { path: "/register", name:"Register", component: CoachRegistration },
-  { path: "/auth", name:"Auth", component: UserAuth },
-  { path: "/requests", name:"Requests", component: RequestsRecieved },
-  { path: "/:notFound(.*)", name:"NotFound", component: NotFound },
+  { path: "/register", name:"Register", component: () => import(/* webpackChunkName: "Register" */ "@/pages/coaches/CoachRegistration.vue") },
+  { path: "/auth", name:"Auth", component: () => import( /* webpackChunkName: "UserAuth" */ "@/pages/auth/UserAuth.vue") },
+  { path: "/requests", name:"Requests", component: () => import( /* webpackChunkName: "RequestsRecieved" */ "@/pages/requests/RequestsRecieved.vue" ) },
+  { path: "/:notFound(.*)", name:"NotFound", component: () => import( /* webpackChunkName: "NotFound" */ "@/pages/NotFound.vue" ) },
 ];
 
 const router = createRouter({

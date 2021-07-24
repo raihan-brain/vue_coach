@@ -21,6 +21,8 @@ export default{
 
   async getRequests(context){
     const coachId =  context.rootGetters.userId;
+    console.log(coachId);
+    
     try {
       const res = await requestServices.getRequests(coachId);
       const resData = res.data;

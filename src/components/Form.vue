@@ -2,11 +2,11 @@
   <div
     class="login d-flex flex-column justify-content-center align-items-center"
   >
-    <h1 class="m-4">Register</h1>
+    <h1 class="m-4">{{ title }}</h1>
     <div class="card mt-3">
       <div className="container login-form">
         <form @submit.prevent="submit">
-          <div class="form-inputs">
+          <div v-if="title === 'Register'" class="form-inputs">
             <BaseInput
               v-model.lazy.trim="name"
               type="text"
@@ -30,7 +30,7 @@
               required
             />
           </div>
-          <div class="form-inputs">
+          <div v-if="title === 'Register'" class="form-inputs">
             <BaseInput
               v-model.lazy.trim="course"
               type="text"
@@ -38,7 +38,7 @@
               required
             />
           </div>
-          <div class="form-inputs">
+          <div v-if="title === 'Register'" class="form-inputs">
             <input
               type="file"
               id="image-upload"
@@ -47,9 +47,12 @@
             />
           </div>
           <input
-            class="mt-1 btn btn-submit btn-lg btn-info"
+            :class="[
+              'mt-1 btn btn-submit btn-lg',
+              title === 'Register' ? 'btn-info' : 'btn-danger',
+            ]"
             type="submit"
-            value="Register"
+            :value="title"
           />
         </form>
       </div>
@@ -76,6 +79,9 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters("CoachList", ["getCoachListLength"]),
+    title() {
+      return this.$route.path === "/login" ? "Register" : "Login";
+    },
   },
   methods: {
     ...mapActions("CoachList", ["addCoach"]),

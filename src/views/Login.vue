@@ -7,19 +7,17 @@
       <div className="container login-form">
         <form @submit.prevent="submit">
           <div class="form-inputs">
-            <input
-              type="email"
+            <BaseInput
               v-model.lazy.trim="email"
-              name="email"
+              type="email"
               placeholder="Email"
               required
             />
           </div>
           <div class="form-inputs">
-            <input
-              type="password"
+            <BaseInput
               v-model.lazy.trim="password"
-              name="password"
+              type="password"
               placeholder="Password"
               required
             />
@@ -68,7 +66,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .form-inputs > input,
 .btn-submit {
   width: 400px;

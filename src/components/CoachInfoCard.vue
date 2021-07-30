@@ -38,26 +38,20 @@
         <div class="modal-body">
           <form @submit.prevent="submit(coach.id)">
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label"
-                >Name</label
-              >
-              <input
-                type="text"
+              <BaseInput
                 v-model="name"
                 class="form-control"
-                id="exampleFormControlInput1"
+                label="Name"
+                type="text"
                 placeholder="Enter Your Name"
               />
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label"
-                >Email</label
-              >
-              <input
-                type="email"
+              <BaseInput
                 v-model="email"
                 class="form-control"
-                id="exampleFormControlInput1"
+                label="Email"
+                type="email"
                 placeholder="name@example.com"
               />
             </div>

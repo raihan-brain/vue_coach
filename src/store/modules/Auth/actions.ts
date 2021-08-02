@@ -1,21 +1,51 @@
-import CoachData from "@/services/DataService/CoachData";
-import HandleRequest from "@/services/DataService/HandleRequest";
-import CoachInfo from "@/types/CoachInfo";
-import ResponseData from "@/types/ResponseData";
+import firebase from "@/utilities/firebase";
+import axios from "axios";
 import { ActionTree } from "vuex";
-import { RootState } from "./../types";
-import { CoachListState } from "./types";
+import { RootState } from "../../types";
+import { authState } from "./types";
 
-export const actions: ActionTree<CoachListState, RootState> = {
-  async getCoachList({ commit }) {
-    const res: ResponseData = await CoachData.getAllCoachList();
-    commit("SET_COACHLIST", res.data);
+export const actions: ActionTree<authState, RootState> = {
+  getLoggedIn({ commit }, { email, password, router }) {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential: any) => {
+        const user = userCredential.user;
+        commit("CoachList/SET_LOGGED_IN_USER", user.email, { root: true });
+        router.replace({ name: "Profile" });
+      })
+      .catch((error: any) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   },
-  async addCoach({ state }, payload: CoachInfo) {
-    await CoachData.createCoach(payload);
+  imageUpload({ commit }, payload: any) {
+    const imageData = new FormData();
+    imageData.set("key", "b3ce459487a7921c3a173fc17b867445");
+    imageData.append("image", payload.target.files[0]);
+
+    axios
+      .post("https://api.imgbb.com/1/upload", imageData)
+      .then((response) => {
+        commit("SET_IMAGE", response.data.data.display_url);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
-  async acceptRequest({ commit }, payload: CoachInfo) {
-    await HandleRequest.acceptRequestUpdate(payload.id, payload);
-    commit("SET_LOGGED_IN_USER", payload.email);
+  getRegistered({ dispatch }, { email, password, router, newCoach }) {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        dispatch("CoachList/addCoach", newCoach, { root: true });
+        alert("registration success");
+        router.replace({ path: "/" });
+      })
+      .catch((err) => {
+        alert("registration failed \n" + err);
+        router.replace({ path: "/register" });
+      });
   },
 };

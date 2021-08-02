@@ -3,7 +3,7 @@ import HandleRequest from "@/services/DataService/HandleRequest";
 import CoachInfo from "@/types/CoachInfo";
 import ResponseData from "@/types/ResponseData";
 import { ActionTree } from "vuex";
-import { RootState } from "./../types";
+import { RootState } from "../../types";
 import { CoachListState } from "./types";
 
 export const actions: ActionTree<CoachListState, RootState> = {

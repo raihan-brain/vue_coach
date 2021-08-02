@@ -1,12 +1,12 @@
-import { getters } from "./getters";
-import { RootState } from "./../types";
 import { Module } from "vuex";
-import { CoachListState } from "./types";
-import { state } from "./state";
-import { mutations } from "./mutations";
+import { RootState } from "../../types";
 import { actions } from "./actions";
+import { getters } from "./getters";
+import { mutations } from "./mutations";
+import { state } from "./state";
+import { authState } from "./types";
 
-export const CoachList: Module<CoachListState, RootState> = {
+export const Auth: Module<authState, RootState> = {
   namespaced: true,
   state,
   mutations,

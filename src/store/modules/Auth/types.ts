@@ -1,1 +1,4 @@
-export interface authState {}
+export interface authState {
+  userID: string;
+  image: string;
+}

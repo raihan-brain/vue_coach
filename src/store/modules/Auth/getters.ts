@@ -1,9 +1,5 @@
-import { RootState } from "./../types";
 import { GetterTree } from "vuex";
-import { CoachListState } from "./types";
+import { RootState } from "../../types";
+import { authState } from "./types";
 
-export const getters: GetterTree<CoachListState, RootState> = {
-  getCoachListLength(state): number {
-    return state.CoachList?.length;
-  },
-};
+export const getters: GetterTree<authState, RootState> = {};

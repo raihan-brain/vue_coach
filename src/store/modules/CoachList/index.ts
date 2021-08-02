@@ -1,10 +1,10 @@
-import { getters } from "./getters";
-import { RootState } from "./../types";
 import { Module } from "vuex";
-import { CoachListState } from "./types";
-import { state } from "./state";
-import { mutations } from "./mutations";
+import { RootState } from "../../types";
 import { actions } from "./actions";
+import { getters } from "./getters";
+import { mutations } from "./mutations";
+import { state } from "./state";
+import { CoachListState } from "./types";
 
 export const CoachList: Module<CoachListState, RootState> = {
   namespaced: true,

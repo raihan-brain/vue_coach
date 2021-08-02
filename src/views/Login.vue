@@ -35,8 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import firebase from "../utilities/firebase";
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default defineComponent({
   data() {
@@ -47,20 +46,13 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations("CoachList", ["SET_LOGGED_IN_USER"]),
+    ...mapActions("Auth", ["getLoggedIn"]),
     submit(): void {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then((userCredential: any) => {
-          var user = userCredential.user;
-          this.SET_LOGGED_IN_USER(user.email);
-          this.$router.replace({ name: "Profile" });
-        })
-        .catch((error: any) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
+      this.getLoggedIn({
+        email: this.email,
+        password: this.password,
+        router: this.$router,
+      });
     },
   },
 });

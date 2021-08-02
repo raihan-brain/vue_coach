@@ -43,7 +43,7 @@
               type="file"
               id="image-upload"
               className="form-control"
-              @change="handleImageUpload"
+              @change="$emit('handleImageUpload', $event)"
             />
           </div>
           <input
@@ -61,11 +61,7 @@
 </template>
 
 <script lang="ts">
-import CoachInfo from "@/types/CoachInfo";
-import axios from "axios";
 import { defineComponent } from "vue";
-import { mapActions, mapGetters } from "vuex";
-import firebase from "../utilities/firebase";
 
 export default defineComponent({
   data() {
@@ -74,51 +70,26 @@ export default defineComponent({
       email: "" as string,
       password: "" as string,
       course: "" as string,
-      image: "",
     };
   },
   computed: {
-    ...mapGetters("CoachList", ["getCoachListLength"]),
     title() {
-      return this.$route.path === "/login" ? "Register" : "Login";
+      return this.$route.path === "/login" ? "Login" : "Register";
     },
   },
   methods: {
-    ...mapActions("CoachList", ["addCoach"]),
-    handleImageUpload(e: any) {
-      const imageData = new FormData();
-      imageData.set("key", "b3ce459487a7921c3a173fc17b867445");
-      imageData.append("image", e.target.files[0]);
-
-      axios
-        .post("https://api.imgbb.com/1/upload", imageData)
-        .then((response) => {
-          this.image = response.data.data.display_url;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
     submit() {
-      const newCoach: CoachInfo = {
+      const authCoach = {
         name: this.name,
         email: this.email,
         course: this.course,
-        image: this.image,
-        student: [],
       };
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          this.addCoach(newCoach);
-          alert("registration success");
-          this.$router.replace({ path: "/" });
-        })
-        .catch((err) => {
-          alert("registration failed \n" + err);
-          this.$router.replace({ path: "/register" });
-        });
+
+      this.$emit("submit", {
+        authCoach,
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 });

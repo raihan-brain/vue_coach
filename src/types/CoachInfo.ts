@@ -5,6 +5,7 @@ export default interface CoachInfo {
   name: string;
   email: string;
   course: string;
+  password?: string;
   image?: string;
   student?: StudentInfo[];
 }

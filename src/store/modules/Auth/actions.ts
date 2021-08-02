@@ -23,7 +23,7 @@ export const actions: ActionTree<authState, RootState> = {
   imageUpload({ commit }, payload: any) {
     const imageData = new FormData();
     imageData.set("key", "b3ce459487a7921c3a173fc17b867445");
-    imageData.append("image", payload.target.files[0]);
+    imageData.append("image", payload);
 
     axios
       .post("https://api.imgbb.com/1/upload", imageData)
